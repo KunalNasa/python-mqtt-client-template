@@ -1,0 +1,63 @@
+asyncapi: 3.0.0
+
+info:
+  title: Temperature Service
+  version: 1.0.0
+  description: This service processes all temperature-related events.
+
+servers:
+  dev:
+    host: localhost
+    protocol: mqtt
+
+channels:
+  temperatureDropped:
+    description: Notifies the user when the temperature drops below a certain threshold.
+    address: /dropped
+    messages:
+      temperatureDropped:
+        $ref: '#/components/messages/temperatureDropped'
+
+  temperatureRaised:
+    description: Notifies the user when the temperature goes above a certain threshold.
+    address: /raised
+    messages:
+      temperatureRaised:
+        $ref: '#/components/messages/temperatureRaised'
+
+operations:
+  handleTemperatureDrop:
+    action: send
+    channel:
+      $ref: '#/channels/temperatureDropped'
+    summary: Sends a notification when the temperature drops below the threshold.
+    messages:
+      - $ref: '#/channels/temperatureDropped/messages/temperatureDropped'
+
+  handleTemperatureRise:
+    action: send
+    channel:
+      $ref: '#/channels/temperatureRaised'
+    summary: Sends a notification when the temperature rises above the threshold.
+    messages:
+      - $ref: '#/channels/temperatureRaised/messages/temperatureRaised'
+
+components:
+  messages:
+    temperatureDropped:
+      summary: A message sent when the temperature drops below a certain threshold.
+      payload:
+        $ref: '#/components/schemas/temperatureId'
+
+    temperatureRaised:
+      summary: A message sent when the temperature rises above a certain threshold.
+      payload:
+        $ref: '#/components/schemas/temperatureId'
+
+  schemas:
+    temperatureId:
+      type: object
+      additionalProperties: false
+      properties:
+        temperatureId:
+          type: string

@@ -8,7 +8,7 @@ const template = path.resolve(__dirname, '../');
 
 describe('testing if generated client match snapshot', () => {
     jest.setTimeout(100000);
-    it('generate simple client for postman echo', async () => {
+    it('Generate client for Temperature service connecting to MQTT broker locally', async () => {
         const testOutputFile = 'client.py';
     
         const generator = new Generator(template, testResultPath, {

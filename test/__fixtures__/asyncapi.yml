@@ -13,14 +13,14 @@ servers:
 channels:
   temperatureDropped:
     description: Notifies the user when the temperature drops below a certain threshold.
-    address: /dropped
+    address: temperature/dropped
     messages:
       temperatureDropped:
         $ref: '#/components/messages/temperatureDropped'
 
   temperatureRaised:
     description: Notifies the user when the temperature goes above a certain threshold.
-    address: /raised
+    address: temperature/raised
     messages:
       temperatureRaised:
         $ref: '#/components/messages/temperatureRaised'
